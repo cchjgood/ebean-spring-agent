@@ -20,6 +20,11 @@
     <ebean.agent.version>10.1.1</ebean.agent.version>
   </properties>
 
+  <scm>
+    <developerConnection>scm:git:git@github.com:ebean-orm/ebean-spring-agent.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
   <dependencies>
 
     <dependency>
