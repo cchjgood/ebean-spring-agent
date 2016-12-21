@@ -1,6 +1,8 @@
 package io.ebean.spring.boot;
 
 import org.avaje.agentloader.AgentLoader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -30,6 +32,8 @@ import org.springframework.core.PriorityOrdered;
 @ConditionalOnClass(AgentLoader.class)
 public class EbeanAgentAutoConfiguration implements BeanFactoryPostProcessor, PriorityOrdered {
 
+  private static final Logger log = LoggerFactory.getLogger(EbeanAgentAutoConfiguration.class);
+
   public EbeanAgentAutoConfiguration() {
     load(); // Spring has already evaluated the @ConditionalOnClass
   }
@@ -48,7 +52,9 @@ public class EbeanAgentAutoConfiguration implements BeanFactoryPostProcessor, Pr
   }
 
   private static void load() {
-    AgentLoader.loadAgentFromClasspath("ebean-agent", "debug=1");
+    if (!AgentLoader.loadAgentFromClasspath("ebean-agent", "debug=1")) {
+      log.debug("ebean-agent not loaded");
+    }
   }
 
   /**
